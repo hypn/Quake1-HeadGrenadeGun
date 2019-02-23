@@ -3,6 +3,9 @@
 ## What it does:
 Makes the grenade launcher fire gibbed heads instead of grenades (also reduces the re-fire delay).
 
+Demo: https://imgur.com/a/AyWevq3
+
+
 ## How to use it:
 Make a "HeadGrenadeGun" directory in your Quake1 directory, put the "PROGS.DAT" file in the directory, and launch the game with:
 ```
