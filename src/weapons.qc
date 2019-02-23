@@ -40,6 +40,15 @@ void() W_Precache =
 	precache_sound ("weapons/grenade.wav");	// grenade launcher
 	precache_sound ("weapons/bounce.wav");		// grenade bounce
 	precache_sound ("weapons/shotgn2.wav");	// super shotgun
+	precache_sound ("zombie/gib.wav");
+	precache_sound ("zombie/z_gib.wav");
+
+	precache_model ("progs/h_dog.mdl");
+	precache_model ("progs/h_guard.mdl");
+	precache_model ("progs/h_ogre.mdl");
+	precache_model ("progs/h_wizard.mdl");
+	precache_model ("progs/h_zombie.mdl");
+	precache_model ("progs/h_player.mdl");
 };
 
 float() crandom =
@@ -550,7 +559,9 @@ void() GrenadeTouch =
 		GrenadeExplode();
 		return;
 	}
-	sound (self, CHAN_WEAPON, "weapons/bounce.wav", 1, ATTN_NORM);	// bounce sound
+
+	sound (self, CHAN_WEAPON, "player/gib.wav", 1, ATTN_NORM);	// grenade bounce sound
+
 	if (self.velocity == '0 0 0')
 		self.avelocity = '0 0 0';
 };
@@ -592,15 +603,31 @@ void() W_FireGrenade =
 	missile.avelocity = '300 300 300';
 
 	missile.angles = vectoangles(missile.velocity);
-	
+
 	missile.touch = GrenadeTouch;
-	
+
 // set missile duration
 	missile.nextthink = time + 2.5;
 	missile.think = GrenadeExplode;
 
-	setmodel (missile, "progs/grenade.mdl");
-	setsize (missile, '0 0 0', '0 0 0');		
+	// throw a random head
+	local float	rndhead;
+	rndhead = rint(random() * 7);
+
+	if (rndhead == 1)
+		setmodel (missile, "progs/h_dog.mdl");
+	else if (rndhead == 2)
+		setmodel (missile, "progs/h_guard.mdl");
+	else if (rndhead == 3)
+		setmodel (missile, "progs/h_ogre.mdl");
+	else if (rndhead == 4)
+		setmodel (missile, "progs/h_wizard.mdl");
+	else if (rndhead == 5)
+		setmodel (missile, "progs/h_zombie.mdl");
+	else
+		setmodel (missile, "progs/h_player.mdl");
+
+	setsize (missile, '0 0 0', '0 0 0');
 	setorigin (missile, self.origin);
 };
 
@@ -946,7 +973,7 @@ void() W_Attack =
 	{
 		player_rocket1();
 		W_FireGrenade();
-		self.attack_finished = time + 0.6;
+		self.attack_finished = time + 0.3;
 	}
 	else if (self.weapon == IT_ROCKET_LAUNCHER)
 	{
