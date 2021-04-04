@@ -509,6 +509,13 @@ void(string gibname, float dm) ThrowHead =
 	self.origin_z = self.origin_z - 24;
 	self.flags = self.flags - (self.flags & FL_ONGROUND);
 	self.avelocity = crandom() * '0 600 0';
+
+  // allow gibbed heads to be picked up for 1x rocket ammo
+	self.items = IT_ROCKETS;
+	self.ammo_rockets = 1;
+	self.flags = FL_ITEM;
+	self.solid = SOLID_TRIGGER;
+	self.touch = BackpackTouch;
 };
 
 

@@ -40,8 +40,6 @@ void() W_Precache =
 	precache_sound ("weapons/grenade.wav");	// grenade launcher
 	precache_sound ("weapons/bounce.wav");		// grenade bounce
 	precache_sound ("weapons/shotgn2.wav");	// super shotgun
-	precache_sound ("zombie/gib.wav");
-	precache_sound ("zombie/z_gib.wav");
 
 	precache_model ("progs/h_dog.mdl");
 	precache_model ("progs/h_guard.mdl");
